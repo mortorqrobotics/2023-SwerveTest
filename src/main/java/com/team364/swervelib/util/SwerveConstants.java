@@ -18,15 +18,15 @@ public final class SwerveConstants {
 
                 public static final COTSFalconSwerveConstants chosenModule = // TODO: This must be tuned to specific
                                                                              // robot
-                                COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
+                                COTSFalconSwerveConstants.SDSMK4(COTSFalconSwerveConstants.driveGearRatios.SDSMK4_L2);
 
                 /* Drivetrain Constants */
-                public static final double trackWidth = Units.inchesToMeters(21.73); // TODO: This must be tuned to
-                                                                                     // specific
-                                                                                     // robot
-                public static final double wheelBase = Units.inchesToMeters(21.73); // TODO: This must be tuned to
+                public static final double trackWidth = Units.inchesToMeters(21.5); // TODO: This must be tuned to
                                                                                     // specific
                                                                                     // robot
+                public static final double wheelBase = Units.inchesToMeters(21.5); // TODO: This must be tuned to
+                                                                                   // specific
+                                                                                   // robot
                 public static final double wheelCircumference = chosenModule.wheelCircumference;
 
                 /*
@@ -92,9 +92,13 @@ public final class SwerveConstants {
 
                 /* Swerve Profiling Values */
                 /** Meters per Second */
-                public static final double maxSpeed = 4.5; // TODO: This must be tuned to specific robot
+                public static final double maxSpeed = 6380.0 / 60.0 *
+                                COTSFalconSwerveConstants.driveGearRatios.SDSMK4_L2 *
+                                chosenModule.wheelDiameter * Math.PI;; // TODO: This must be tuned to specific robot
                 /** Radians per Second */
-                public static final double maxAngularVelocity = 10.0; // TODO: This must be tuned to specific robot
+                public static final double maxAngularVelocity = maxSpeed /
+                                Math.hypot(trackWidth / 2.0, wheelBase / 2.0);; // TODO: This must be tuned to specific
+                                                                                // robot
 
                 /* Neutral Modes */
                 public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
@@ -145,20 +149,23 @@ public final class SwerveConstants {
                                         canCoderID, angleOffset);
                 }
         }
-
-        public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be
-                                                  // tuned to specific robot
-                public static final double kMaxSpeedMetersPerSecond = 3;
-                public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-                public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-                public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-
-                public static final double kPXController = 1;
-                public static final double kPYController = 1;
-                public static final double kPThetaController = 1;
-
-                /* Constraint for the motion profilied robot angle controller */
-                public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
-                                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-        }
+        /*
+         * public static final class AutoConstants { // TODO: The below constants are
+         * used in the example auto, and must be
+         * // tuned to specific robot
+         * public static final double kMaxSpeedMetersPerSecond = 3;
+         * public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+         * public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+         * public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+         * 
+         * public static final double kPXController = 1;
+         * public static final double kPYController = 1;
+         * public static final double kPThetaController = 1;
+         * 
+         * // Constraint for the motion profilied robot angle controller
+         * public static final TrapezoidProfile.Constraints kThetaControllerConstraints
+         * = new TrapezoidProfile.Constraints(
+         * kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+         * }
+         */
 }
