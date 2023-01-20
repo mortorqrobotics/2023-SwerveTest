@@ -31,9 +31,9 @@ public class RobotContainer {
   public RobotContainer() {
     mainController = new XboxController(0);
 
-    drivetrain = new Swerve();
-
     gyro = new Gyroscope();
+
+    drivetrain = new Swerve();
 
     configureBindings();
   }
@@ -58,7 +58,7 @@ public class RobotContainer {
   // }
 
   public static double getRobotSpeed() {
-    return Controls.getLeftTrigger() ? 0.45 : 0.7;
+    return Controls.getLeftTrigger() ? 0.1 : 0.3;
     // return 0.7;
   }
 

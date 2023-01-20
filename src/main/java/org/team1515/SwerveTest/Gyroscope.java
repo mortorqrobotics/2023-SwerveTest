@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.SPI;
 
 public class Gyroscope {
-    private final AHRS navx;
+    public final AHRS navx;
     private double offset = 0;
 
     public Gyroscope() {
