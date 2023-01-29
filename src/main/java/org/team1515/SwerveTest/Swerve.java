@@ -1,13 +1,18 @@
 package org.team1515.SwerveTest;
 
 import com.team364.swervelib.util.SwerveModule;
+
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
+
 import com.team364.swervelib.util.SwerveConstants;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -19,9 +24,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Swerve extends SubsystemBase {
     private SwerveDriveOdometry swerveOdometry;
     private SwerveModule[] mSwerveMods;
+    private SwerveDrivePoseEstimator poseEstimator;
+    private Pose2d initialPos = new Pose2d(0.0, 0.0, new Rotation2d(0.0));
 
     public Swerve() {
         zeroGyro();
+
+        poseEstimator = new SwerveDrivePoseEstimator(SwerveConstants.Swerve.swerveKinematics, Rotation2d.fromRadians(0), getModulePositions(), initialPos);
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, SwerveConstants.Swerve.Mod0.constants),
@@ -61,13 +70,7 @@ public class Swerve extends SubsystemBase {
         }
     }
 
-    public Pose2d getPose() {
-        return swerveOdometry.getPoseMeters();
-    }
 
-    public void resetOdometry(Pose2d pose) {
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
-    }
 
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
@@ -97,6 +100,27 @@ public class Swerve extends SubsystemBase {
     public void resetModulesToAbsolute() {
         for (SwerveModule mod : mSwerveMods) {
             mod.resetToAbsolute();
+        }
+    }
+
+    public Pose2d getPose(){
+        return poseEstimator.getEstimatedPosition();
+    }
+
+    public void updateOdometry() {
+        poseEstimator.update(
+                RobotContainer.gyro.getGyroscopeRotation(), getModulePositions());
+
+        // Also apply vision measurements. We use 0.3 seconds in the past as an example
+        // -- on
+        // a real robot, this must be calculated based either on latency or timestamps.
+        Optional<EstimatedRobotPose> result =
+                RobotContainer.pvw.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+
+        if (result.isPresent()) {
+            EstimatedRobotPose camPose = result.get();
+            poseEstimator.addVisionMeasurement(
+                    camPose.estimatedPose.toPose2d(), camPose.timestampSeconds);
         }
     }
 

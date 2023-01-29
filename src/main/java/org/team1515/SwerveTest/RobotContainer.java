@@ -4,20 +4,9 @@
 
 package org.team1515.SwerveTest;
 
-import org.team1515.SwerveTest.SwerveCommand;
-
-import org.team1515.SwerveTest.Swerve;
-import org.team1515.SwerveTest.Controls;
-
 import com.team364.swervelib.util.SwerveConstants;
 
-import java.util.function.BooleanSupplier;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,11 +16,14 @@ public class RobotContainer {
 
   public static Swerve drivetrain;
   public static Gyroscope gyro;
+  public static PhotonVisionWrapper pvw;
 
   public RobotContainer() {
     mainController = new XboxController(0);
 
     gyro = new Gyroscope();
+
+    pvw = new PhotonVisionWrapper();
 
     drivetrain = new Swerve();
 
@@ -48,6 +40,7 @@ public class RobotContainer {
             () -> Controls.DRIVE_ROBOT_ORIENTED.getAsBoolean()));
 
     Controls.RESET_GYRO.onTrue(new InstantCommand(() -> drivetrain.zeroGyro())); // drivetrain::zeroGyro not working
+    Controls.ZERO_ROBOT.onTrue(new ZeroRobot(drivetrain));
 
     // Controls.ALIGN.onTrue(new Align(drivetrain));
 

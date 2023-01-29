@@ -11,6 +11,7 @@ public class Controls {
                                                                                                     // and apriltag
                                                                                                     // overlap?
     public static final Trigger RESET_GYRO = new Trigger(RobotContainer.mainController::getBackButton);
+    public static final Trigger ZERO_ROBOT = new Trigger(RobotContainer.mainController::getStartButton);
     public static final BooleanSupplier DRIVE_ROBOT_ORIENTED = () -> RobotContainer.mainController.getLeftBumper();
 
     public static boolean getRightTrigger() {

@@ -10,8 +10,6 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.team364.swervelib.math.Conversions;
-import com.team364.swervelib.util.CTREModuleState;
-import com.team364.swervelib.util.SwerveModuleConstants;
 
 import org.team1515.SwerveTest.Robot;
 
