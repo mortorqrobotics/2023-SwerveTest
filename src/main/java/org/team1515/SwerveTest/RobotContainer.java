@@ -51,7 +51,7 @@ public class RobotContainer {
   // }
 
   public static double getRobotSpeed() {
-    return Controls.getLeftTrigger() ? 0.1 : 0.3;
+    return Controls.getLeftTrigger() ? 0.3 : 0.5;
     // return 0.7;
   }
 

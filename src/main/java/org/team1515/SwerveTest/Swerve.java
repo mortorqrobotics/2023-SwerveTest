@@ -30,14 +30,14 @@ public class Swerve extends SubsystemBase {
     public Swerve() {
         zeroGyro();
 
-        poseEstimator = new SwerveDrivePoseEstimator(SwerveConstants.Swerve.swerveKinematics, Rotation2d.fromRadians(0), getModulePositions(), initialPos);
-
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, SwerveConstants.Swerve.Mod0.constants),
                 new SwerveModule(1, SwerveConstants.Swerve.Mod1.constants),
                 new SwerveModule(2, SwerveConstants.Swerve.Mod2.constants),
                 new SwerveModule(3, SwerveConstants.Swerve.Mod3.constants)
         };
+
+        poseEstimator = new SwerveDrivePoseEstimator(SwerveConstants.Swerve.swerveKinematics, Rotation2d.fromRadians(0), getModulePositions(), initialPos);
 
         swerveOdometry = new SwerveDriveOdometry(SwerveConstants.Swerve.swerveKinematics, getYaw(),
                 getModulePositions());
@@ -126,11 +126,10 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic() {
+        updateOdometry();
         if (DriverStation.isDisabled()) {
             resetModulesToAbsolute();
         }
-
-        swerveOdometry.update(getYaw(), getModulePositions());
 
         for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());

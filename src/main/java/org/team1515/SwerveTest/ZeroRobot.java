@@ -1,5 +1,8 @@
 package org.team1515.SwerveTest;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonPipelineResult;
+
 import com.team364.swervelib.util.SwerveConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -13,7 +16,10 @@ public class ZeroRobot extends CommandBase {
     private PIDController angleController;
     private double maxRotate;
 
-    private double p = 0;
+    private PhotonCamera camera;
+    private PhotonPipelineResult result;
+
+    private double p = 1;
     private double i = 0;
     private double d = 0;
 
@@ -27,6 +33,8 @@ public class ZeroRobot extends CommandBase {
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.maxRotate = 0.5 * SwerveConstants.Swerve.maxAngularVelocity;
 
+        camera = RobotContainer.pvw.photonCamera;
+
         angleController = new PIDController(p, i, d);
         // TODO retune PID
         angleController.setTolerance(0.025);
@@ -38,10 +46,16 @@ public class ZeroRobot extends CommandBase {
 
     @Override
     public void execute() {
-        double error = drivetrainSubsystem.getPose().getRotation().getRadians();
+        double error = 0.0;
+        // error = drivetrainSubsystem.getPose().getRotation().getRadians();
+        result = camera.getLatestResult();
+        if (result.hasTargets()) {
+            error = result.getBestTarget().getYaw(); }
+        System.out.println("Error: " + error);
         if (error == 0) // Stop auto align if camera has no target in view
             this.end(true);
         double rotation = MathUtil.clamp(angleController.calculate(error, 0.0), -maxRotate, maxRotate);
+        System.out.println("Rotation: " + rotation);
         drivetrainSubsystem.drive(new Translation2d(0.0, 0.0), rotation, true, true);
     }
 
