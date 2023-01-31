@@ -29,6 +29,8 @@ public class Swerve extends SubsystemBase {
     private Rotation2d realZero;
 
     public Swerve(Pose2d initiallPose) {
+        
+
         realZero = initialPos.getRotation();
 
         zeroGyro();
@@ -92,6 +94,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void zeroGyro() {
+
         realZero = realZero.minus(RobotContainer.gyro.getGyroscopeRotation());
         RobotContainer.gyro.zeroYaw();
     }

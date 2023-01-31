@@ -13,7 +13,7 @@ public class ZeroRobotGyro extends CommandBase {
     private PIDController angleController;
     private double maxRotate;
 
-    private double p = 30;
+    private double p = 20;
     private double i = 0;
     private double d = 0;
     private double ff = 3.25;
@@ -26,12 +26,12 @@ public class ZeroRobotGyro extends CommandBase {
      */
     public ZeroRobotGyro(Swerve drivetrainSubsystem) {
         this.drivetrainSubsystem = drivetrainSubsystem;
-        this.maxRotate = 0.5 * SwerveConstants.Swerve.maxAngularVelocity;
+        this.maxRotate = SwerveConstants.Swerve.maxAngularVelocity;
 
         angleController = new PIDController(p, i, d);
         // TODO retune PID
         angleController.setTolerance(0.025);
-        angleController.enableContinuousInput(0, 2*Math.PI);
+        angleController.enableContinuousInput(-Math.PI, Math.PI);
         angleController.setSetpoint(0.0);
 
         addRequirements(drivetrainSubsystem);
@@ -41,8 +41,9 @@ public class ZeroRobotGyro extends CommandBase {
     public void execute() {
         double error = RobotContainer.gyro.getGyroscopeRotation().minus(drivetrainSubsystem.getRealZero()).getRadians();
         System.out.println("Error: " + error);
-        double rotation = (MathUtil.clamp(angleController.calculate(error, 0.0)+(ff*Math.signum(error)), -maxRotate, maxRotate));
+        double rotation = (MathUtil.clamp(angleController.calculate(error, 0.0)+(ff*Math.signum(-error)), -maxRotate, maxRotate));
         System.out.println("Rotatiom: " + rotation);
+        System.out.println("FF: " + ff);
         drivetrainSubsystem.drive(new Translation2d(0.0, 0.0), rotation, true, true);
     }
 

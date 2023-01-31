@@ -17,8 +17,8 @@ public class RobotContainer {
   public static XboxController mainController;
   public static XboxController secondController;
 
-  public static Swerve drivetrain;
   public static Gyroscope gyro;
+  public static Swerve drivetrain;
   public static PhotonVisionWrapper pvw;
 
   public RobotContainer() {
@@ -37,9 +37,9 @@ public class RobotContainer {
 
     drivetrain.setDefaultCommand(
         new SwerveCommand(drivetrain,
-            () -> -modifyAxis(-mainController.getLeftY() * getRobotSpeed()) * SwerveConstants.Swerve.maxSpeed,
-            () -> -modifyAxis(-mainController.getLeftX() * getRobotSpeed()) * SwerveConstants.Swerve.maxSpeed,
-            () -> -modifyAxis(mainController.getRightX() * getRobotSpeed()) * SwerveConstants.Swerve.maxAngularVelocity,
+            () -> -modifyAxis(-mainController.getLeftY() * getRobotSpeed()),
+            () -> -modifyAxis(-mainController.getLeftX() * getRobotSpeed()),
+            () -> -modifyAxis(mainController.getRightX() * getRobotSpeed()),
             () -> Controls.DRIVE_ROBOT_ORIENTED.getAsBoolean()));
 
     Controls.RESET_GYRO.onTrue(new InstantCommand(() -> drivetrain.zeroGyro())); // drivetrain::zeroGyro not working
@@ -54,7 +54,7 @@ public class RobotContainer {
   // }
 
   public static double getRobotSpeed() {
-    return Controls.getLeftTrigger() ? 0.3 : 0.5;
+    return Controls.getLeftTrigger() ? 0.4 : 0.7;
     // return 0.7;
   }
 
