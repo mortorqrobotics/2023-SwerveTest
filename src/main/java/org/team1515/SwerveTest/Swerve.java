@@ -26,8 +26,11 @@ public class Swerve extends SubsystemBase {
     private SwerveModule[] mSwerveMods;
     private SwerveDrivePoseEstimator poseEstimator;
     private Pose2d initialPos = new Pose2d(0.0, 0.0, new Rotation2d(0.0));
+    private Rotation2d realZero;
 
-    public Swerve() {
+    public Swerve(Pose2d initiallPose) {
+        realZero = initialPos.getRotation();
+
         zeroGyro();
 
         mSwerveMods = new SwerveModule[] {
@@ -89,6 +92,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void zeroGyro() {
+        realZero = realZero.minus(RobotContainer.gyro.getGyroscopeRotation());
         RobotContainer.gyro.zeroYaw();
     }
 
@@ -136,5 +140,9 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
         }
+    }
+
+    public Rotation2d getRealZero() {
+        return realZero;
     }
 }

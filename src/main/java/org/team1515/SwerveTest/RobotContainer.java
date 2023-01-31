@@ -7,6 +7,9 @@ package org.team1515.SwerveTest;
 import com.team364.swervelib.util.SwerveConstants;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,7 +28,7 @@ public class RobotContainer {
 
     pvw = new PhotonVisionWrapper();
 
-    drivetrain = new Swerve();
+    drivetrain = new Swerve(new Pose2d(new Translation2d(0.0, 0.0), new Rotation2d(0.0)));
 
     configureBindings();
   }
@@ -40,7 +43,7 @@ public class RobotContainer {
             () -> Controls.DRIVE_ROBOT_ORIENTED.getAsBoolean()));
 
     Controls.RESET_GYRO.onTrue(new InstantCommand(() -> drivetrain.zeroGyro())); // drivetrain::zeroGyro not working
-    Controls.ZERO_ROBOT.onTrue(new ZeroRobot(drivetrain));
+    Controls.ZERO_ROBOT.onTrue(new ZeroRobotGyro(drivetrain));
 
     // Controls.ALIGN.onTrue(new Align(drivetrain));
 
