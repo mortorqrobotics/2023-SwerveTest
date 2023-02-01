@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -34,6 +35,7 @@ public class Swerve extends SubsystemBase {
         realZero = initialPos.getRotation();
 
         zeroGyro();
+        SmartDashboard.putData("gyro", RobotContainer.gyro.navx);
 
         mSwerveMods = new SwerveModule[] {
                 new SwerveModule(0, SwerveConstants.Swerve.Mod0.constants),
@@ -134,6 +136,7 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         updateOdometry();
+        SmartDashboard.putNumber("gyro angle", RobotContainer.gyro.getGyroscopeRotation().getDegrees());
         if (DriverStation.isDisabled()) {
             resetModulesToAbsolute();
         }

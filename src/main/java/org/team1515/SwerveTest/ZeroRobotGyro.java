@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ZeroRobotGyro extends CommandBase {
     private Swerve drivetrainSubsystem;
@@ -13,10 +15,10 @@ public class ZeroRobotGyro extends CommandBase {
     private PIDController angleController;
     private double maxRotate;
 
-    private double p = 20;
+    private double p = 54;
     private double i = 0;
     private double d = 0;
-    private double ff = 3.25;
+    private double ff = 3.23;
 
     /**
      * Align robot with the target using the limelight
@@ -39,7 +41,7 @@ public class ZeroRobotGyro extends CommandBase {
 
     @Override
     public void execute() {
-        double error = RobotContainer.gyro.getGyroscopeRotation().minus(drivetrainSubsystem.getRealZero()).getRadians();
+        double error = MathUtil.angleModulus(RobotContainer.gyro.getGyroscopeRotation().getRadians()) - drivetrainSubsystem.getRealZero().getRadians();
         System.out.println("Error: " + error);
         double rotation = (MathUtil.clamp(angleController.calculate(error, 0.0)+(ff*Math.signum(-error)), -maxRotate, maxRotate));
         System.out.println("Rotatiom: " + rotation);
