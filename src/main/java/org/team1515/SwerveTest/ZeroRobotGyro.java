@@ -15,7 +15,7 @@ public class ZeroRobotGyro extends CommandBase {
     private PIDController angleController;
     private double maxRotate;
 
-    private double p = 54;
+    private double p = 10;
     private double i = 0;
     private double d = 0;
     private double ff = 3.23;
