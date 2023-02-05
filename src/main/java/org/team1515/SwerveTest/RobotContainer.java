@@ -44,6 +44,7 @@ public class RobotContainer {
 
     Controls.RESET_GYRO.onTrue(new InstantCommand(() -> drivetrain.zeroGyro())); // drivetrain::zeroGyro not working
     Controls.ZERO_ROBOT.onTrue(new ZeroRobotGyro(drivetrain));
+    Controls.BALANCE.onTrue(new AutoBalance(drivetrain));
 
     // Controls.ALIGN.onTrue(new Align(drivetrain));
 

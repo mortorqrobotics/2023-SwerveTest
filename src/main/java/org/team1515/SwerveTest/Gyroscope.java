@@ -35,4 +35,12 @@ public class Gyroscope {
     public float getYaw() {
         return navx.getYaw();
     }
+
+    public float getPitch() {
+        return navx.getPitch();
+    }
+
+    public float getRoll() {
+        return navx.getRoll();
+    }
 }

@@ -13,6 +13,7 @@ public class Controls {
     public static final Trigger RESET_GYRO = new Trigger(RobotContainer.mainController::getBackButton);
     public static final Trigger ZERO_ROBOT = new Trigger(RobotContainer.mainController::getStartButton);
     public static final BooleanSupplier DRIVE_ROBOT_ORIENTED = () -> RobotContainer.mainController.getLeftBumper();
+    public static final Trigger BALANCE  = new Trigger(RobotContainer.mainController::getYButton);
 
     public static boolean getRightTrigger() {
         return RobotContainer.mainController.getRightTriggerAxis() >= 0.250;

@@ -7,6 +7,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.team364.swervelib.math.Conversions;
@@ -40,6 +41,7 @@ public class SwerveModule {
         /* Drive Motor Config */
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID);
         configDriveMotor();
+        mDriveMotor.setNeutralMode(NeutralMode.Brake);
 
         lastAngle = getState().angle;
     }

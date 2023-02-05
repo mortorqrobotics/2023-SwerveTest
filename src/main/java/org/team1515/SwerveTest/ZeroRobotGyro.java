@@ -15,10 +15,10 @@ public class ZeroRobotGyro extends CommandBase {
     private PIDController angleController;
     private double maxRotate;
 
-    private double p = 10;
-    private double i = 0;
-    private double d = 0;
-    private double ff = 3.23;
+    private double p = 9;
+    private double i = 2;
+    private double d = 0.1;
+    private double ff = 3.26;
 
     /**
      * Align robot with the target using the limelight
@@ -32,11 +32,11 @@ public class ZeroRobotGyro extends CommandBase {
 
         angleController = new PIDController(p, i, d);
         // TODO retune PID
-        angleController.setTolerance(0.025);
+        angleController.setTolerance(Units.degreesToRadians(3.5));
         angleController.enableContinuousInput(-Math.PI, Math.PI);
         angleController.setSetpoint(0.0);
 
-        addRequirements(drivetrainSubsystem);
+        //addRequirements(drivetrainSubsystem);
     }
 
     @Override
