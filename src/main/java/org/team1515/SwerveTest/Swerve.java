@@ -140,6 +140,7 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("yaw", RobotContainer.gyro.getYaw());
         SmartDashboard.putNumber("pitch", RobotContainer.gyro.getPitch());
         SmartDashboard.putNumber("roll", RobotContainer.gyro.getRoll());
+        SmartDashboard.putNumber("rollOffset", RobotContainer.gyro.rollOffset);
         if (DriverStation.isDisabled()) {
             resetModulesToAbsolute();
         }

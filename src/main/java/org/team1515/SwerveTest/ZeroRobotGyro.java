@@ -19,6 +19,7 @@ public class ZeroRobotGyro extends CommandBase {
     private double i = 2;
     private double d = 0.1;
     private double ff = 3.26;
+    private double angle;
 
     /**
      * Align robot with the target using the limelight
@@ -26,10 +27,10 @@ public class ZeroRobotGyro extends CommandBase {
      * @param drivetrainSubsystem
      * @param limelight
      */
-    public ZeroRobotGyro(Swerve drivetrainSubsystem) {
+    public ZeroRobotGyro(Swerve drivetrainSubsystem, double angle) {
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.maxRotate = SwerveConstants.Swerve.maxAngularVelocity;
-
+        this.angle = angle;
         angleController = new PIDController(p, i, d);
         // TODO retune PID
         angleController.setTolerance(Units.degreesToRadians(3.5));
@@ -41,7 +42,7 @@ public class ZeroRobotGyro extends CommandBase {
 
     @Override
     public void execute() {
-        double error = MathUtil.angleModulus(RobotContainer.gyro.getGyroscopeRotation().getRadians()) - drivetrainSubsystem.getRealZero().getRadians();
+        double error = MathUtil.angleModulus(RobotContainer.gyro.getGyroscopeRotation().getRadians()) - (drivetrainSubsystem.getRealZero().getRadians() + angle);
         System.out.println("Error: " + error);
         double rotation = (MathUtil.clamp(angleController.calculate(error, 0.0)+(ff*Math.signum(-error)), -maxRotate, maxRotate));
         System.out.println("Rotatiom: " + rotation);

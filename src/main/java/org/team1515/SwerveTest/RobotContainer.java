@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -43,9 +44,11 @@ public class RobotContainer {
             () -> Controls.DRIVE_ROBOT_ORIENTED.getAsBoolean()));
 
     Controls.RESET_GYRO.onTrue(new InstantCommand(() -> drivetrain.zeroGyro())); // drivetrain::zeroGyro not working
-    Controls.ZERO_ROBOT.onTrue(new ZeroRobotGyro(drivetrain));
+    Controls.ZERO_ROBOT.onTrue(new ZeroRobotGyro(drivetrain, 0.0));
+    Controls.PARALLEL.onTrue(new ZeroRobotGyro(drivetrain, Units.degreesToRadians(90)));
     Controls.BALANCE.onTrue(new AutoBalance(drivetrain));
-
+    Controls.ZERO_ROLL.onTrue(new InstantCommand(() -> RobotContainer.gyro.zeroRoll()));
+    Controls.DRIVE.onTrue(new DriveDist(drivetrain, 4));
     // Controls.ALIGN.onTrue(new Align(drivetrain));
 
   }

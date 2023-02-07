@@ -9,8 +9,11 @@ public class Gyroscope {
     public final AHRS navx;
     private double offset = 0;
 
+    public float rollOffset = 0;
+
     public Gyroscope() {
         navx = new AHRS(SPI.Port.kMXP, (byte) 200);
+        zeroRoll();
     }
 
     /**
@@ -41,6 +44,10 @@ public class Gyroscope {
     }
 
     public float getRoll() {
-        return navx.getRoll();
+        return navx.getRoll()-rollOffset;
+    }
+
+    public void zeroRoll() {
+        rollOffset = navx.getRoll();
     }
 }

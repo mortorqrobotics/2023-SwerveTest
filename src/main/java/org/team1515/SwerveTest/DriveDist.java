@@ -21,7 +21,7 @@ public class DriveDist extends CommandBase {
     public DriveDist(Swerve drivetrainSubsystem, double targetDist) {
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.targetDist = targetDist;
-        this.maxSpeed = 0.5 * SwerveConstants.Swerve.maxSpeed;
+        this.maxSpeed = 0.05 * SwerveConstants.Swerve.maxSpeed;
 
         this.direction = 1;
 
@@ -33,7 +33,7 @@ public class DriveDist extends CommandBase {
         this.drivetrainSubsystem = drivetrainSubsystem;
         this.targetDist = targetDist;
         this.direction = direction;
-        this.maxSpeed = 0.5 * SwerveConstants.Swerve.maxSpeed;
+        this.maxSpeed = 0.05 * SwerveConstants.Swerve.maxSpeed;
 
         SmartDashboard.putNumber("target dist", targetDist);
         addRequirements(drivetrainSubsystem);
