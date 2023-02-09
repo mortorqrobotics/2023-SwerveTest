@@ -23,7 +23,7 @@ public class AutoBalance extends CommandBase {
 
     public AutoBalance(Swerve drivetrain) {
         this.drivetrain = drivetrain;
-        this.maxSpeed = 0.5 * SwerveConstants.Swerve.maxSpeed;
+        this.maxSpeed = 0.2 * SwerveConstants.Swerve.maxSpeed;
 
         controller = new PIDController(p,i,d); // retun PID
         controller.setTolerance(Units.degreesToRadians(2));
