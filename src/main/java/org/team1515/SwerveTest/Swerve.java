@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.photonvision.EstimatedRobotPose;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.team364.swervelib.util.SwerveConstants;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -18,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -154,5 +156,10 @@ public class Swerve extends SubsystemBase {
 
     public Rotation2d getRealZero() {
         return realZero;
+    }
+    public void setVolts(double volts){
+        for (int i = 0; i<4; i++){
+            mSwerveMods[i].getDriveMotor().set(ControlMode.PercentOutput, volts / RobotController.getBatteryVoltage());
+        }
     }
 }

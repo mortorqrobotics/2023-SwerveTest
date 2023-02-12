@@ -16,9 +16,9 @@ public class AutoBalance extends CommandBase {
     private double maxSpeed;
     private LinearFilter filter = LinearFilter.movingAverage(5);
 
-    private double p = 10;
-    private double i = 8;
-    private double d = 0.1;
+    private double p = 3;
+    private double i = 1.6;
+    private double d = 0.55;
     private int count = 0;
 
     public AutoBalance(Swerve drivetrain) {
@@ -26,7 +26,7 @@ public class AutoBalance extends CommandBase {
         this.maxSpeed = 0.2 * SwerveConstants.Swerve.maxSpeed;
 
         controller = new PIDController(p,i,d); // retun PID
-        controller.setTolerance(Units.degreesToRadians(2));
+        controller.setTolerance(Units.degreesToRadians(1));
         controller.enableContinuousInput(-Math.PI, Math.PI);
         controller.setSetpoint(0);
 

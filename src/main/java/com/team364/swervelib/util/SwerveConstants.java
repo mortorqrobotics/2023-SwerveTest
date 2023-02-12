@@ -74,7 +74,7 @@ public final class SwerveConstants {
                 public static final double angleKF = chosenModule.angleKF;
 
                 /* Drive Motor PID Values */
-                public static final double driveKP = 0.05; // TODO: This must be tuned to specific robot
+                public static final double driveKP = 0.076141; // TODO: This must be tuned to specific robot
                 public static final double driveKI = 0.0;
                 public static final double driveKD = 0.0;
                 public static final double driveKF = 0.0;
@@ -83,18 +83,15 @@ public final class SwerveConstants {
                  * Drive Motor Characterization Values
                  * Divide SYSID values by 12 to convert from volts to percent output for CTRE
                  */
-                public static final double driveKS = (0.32 / 12); // TODO: This must be tuned to specific robot
-                public static final double driveKV = (1.51 / 12);
-                public static final double driveKA = (0.27 / 12);
+                public static final double driveKS = (-0.020976/12); //(0.32 / 12); // TODO: This must be tuned to specific robot
+                public static final double driveKV = (4.3995 / 12);
+                public static final double driveKA = (0.17933 / 12);
 
                 /* Swerve Profiling Values */
                 /** Meters per Second */
-                public static final double maxSpeed = 6380.0 / 60.0 *
-                                COTSFalconSwerveConstants.driveGearRatios.SDSMK4_L2 *
-                                chosenModule.wheelDiameter * Math.PI*0.1; // TODO: This must be tuned to specific robot
+                public static final double maxSpeed = 4.5;
                 /** Radians per Second */
-                public static final double maxAngularVelocity = maxSpeed /
-                                Math.hypot(trackWidth / 2.0, wheelBase / 2.0); // TODO: This must be tuned to specific
+                public static final double maxAngularVelocity = 10.0;
                                                                                 // robot
 
                 /* Neutral Modes */

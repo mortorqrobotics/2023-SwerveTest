@@ -127,4 +127,7 @@ public class SwerveModule {
                         SwerveConstants.Swerve.wheelCircumference, SwerveConstants.Swerve.driveGearRatio),
                 getAngle());
     }
+    public TalonFX getDriveMotor(){
+        return mDriveMotor;
+    }
 }

@@ -45,7 +45,8 @@ public class RobotContainer {
 
     Controls.RESET_GYRO.onTrue(new InstantCommand(() -> drivetrain.zeroGyro())); // drivetrain::zeroGyro not working
     Controls.ZERO_ROBOT.onTrue(new ZeroRobotGyro(drivetrain, 0.0));
-    Controls.PARALLEL.onTrue(new ZeroRobotGyro(drivetrain, Units.degreesToRadians(90)));
+    Controls.FF.onTrue(new TuneFF(drivetrain));
+    Controls.AUTO_COMMAND.onTrue(new AutoCommandBalance(drivetrain));
     Controls.BALANCE.onTrue(new AutoBalance(drivetrain));
     Controls.ZERO_ROLL.onTrue(new InstantCommand(() -> RobotContainer.gyro.zeroRoll()));
     Controls.DRIVE.onTrue(new DriveDist(drivetrain, 4));
@@ -58,12 +59,12 @@ public class RobotContainer {
   // }
 
   public static double getRobotSpeed() {
-    return Controls.getLeftTrigger() ? 0.4 : 0.7;
+    return Controls.getLeftTrigger() ? 0.5 : 0.7;
     // return 0.7;
   }
 
   public static double modifyAxis(double value) {
-    value = deadband(value, 0.08);
+    value = deadband(value, 0.06);
 
     // Square the axis
     value = Math.copySign(value * value, value);

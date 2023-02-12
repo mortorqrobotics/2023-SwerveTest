@@ -14,9 +14,10 @@ public class Controls {
     public static final Trigger ZERO_ROBOT = new Trigger(RobotContainer.mainController::getStartButton);
     public static final BooleanSupplier DRIVE_ROBOT_ORIENTED = () -> RobotContainer.mainController.getLeftBumper();
     public static final Trigger BALANCE  = new Trigger(RobotContainer.mainController::getYButton);
-    public static final Trigger PARALLEL = new Trigger(RobotContainer.mainController::getXButton);
     public static final Trigger ZERO_ROLL = new Trigger(RobotContainer.mainController::getAButton);
     public static final Trigger DRIVE = new Trigger(RobotContainer.mainController::getBButton);
+    public static final Trigger FF = new Trigger(RobotContainer.mainController::getRightBumper);
+    public static final Trigger AUTO_COMMAND = new Trigger(RobotContainer.mainController::getXButton);
 
     public static boolean getRightTrigger() {
         return RobotContainer.mainController.getRightTriggerAxis() >= 0.250;
