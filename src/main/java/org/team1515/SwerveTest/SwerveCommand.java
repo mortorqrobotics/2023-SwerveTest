@@ -6,6 +6,7 @@ import java.util.function.DoubleSupplier;
 import com.team364.swervelib.util.SwerveConstants;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -15,6 +16,9 @@ public class SwerveCommand extends CommandBase {
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
+
+    private SlewRateLimiter filterX = new SlewRateLimiter(0.5, -0.5, 0);
+    private SlewRateLimiter filterY = new SlewRateLimiter(0.5, -0.5, 0);
 
     public SwerveCommand(Swerve drivetrain, DoubleSupplier translationSup, DoubleSupplier strafeSup,
             DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
@@ -30,9 +34,13 @@ public class SwerveCommand extends CommandBase {
     @Override
     public void execute() {
         /* Get Values, Deadband */
-        double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), SwerveConstants.stickDeadband);
-        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), SwerveConstants.stickDeadband);
-        double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), SwerveConstants.stickDeadband);
+        double translationVal = filterY.calculate(translationSup.getAsDouble());
+        double strafeVal = filterX.calculate(strafeSup.getAsDouble());
+        double rotationVal = rotationSup.getAsDouble();
+
+        System.out.println(translationVal);
+        System.out.println(strafeVal);
+        System.out.println(rotationVal);
 
         /* Drive */
         drivetrain.drive(

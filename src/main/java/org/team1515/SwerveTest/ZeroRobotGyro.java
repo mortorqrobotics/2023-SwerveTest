@@ -5,7 +5,6 @@ import com.team364.swervelib.util.SwerveConstants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,6 +15,8 @@ public class ZeroRobotGyro extends CommandBase {
     // l
     private PIDController angleController;
     private double maxRotate;
+
+
 
     private double p = 2;
     private double i = 0;
